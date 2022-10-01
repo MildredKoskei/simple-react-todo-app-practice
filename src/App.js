@@ -1,24 +1,44 @@
-import logo from './logo.svg';
+import {React, useState, useEffect} from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-
+import TodoItems from './components/TodoItems';
+import Form from './components/Form';
+import Nav from './components/Nav';
 function App() {
+  const [displayTodos, setDislayTodos]= useState([])
+useEffect(() => {
+  fetch(" http://localhost:3000/todos")
+  .then(resp => resp.json())
+  .then(result => setDislayTodos(result))
+}, []);
+function handleDelete(id){
+
+setDislayTodos(prevValue => prevValue.filter(object => object.id !== id))
+fetch(`http://localhost:3000/todos/${id}`,{method: "DELETE"});
+}
+
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Nav />
+      <Routes>
+        <Route path = "/" element = {<h1>Todo App</h1>}/>
+        <Route path = "/todos" element = {
+        <>
+        <Form setDislayTodos ={setDislayTodos}/>
+      <ul className='ul'>{displayTodos.map((todoObject =>
+      <TodoItems 
+      todoObject = {todoObject} 
+      key = {todoObject.id}
+      handleDelete = {handleDelete} />
+     
+       ))}</ul>
+       
+      </> } />
+      </ Routes>
+      
     </div>
+    
   );
 }
 

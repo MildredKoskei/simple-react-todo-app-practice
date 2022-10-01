@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "id": 2,
+      "task": "sell a car",
+      "complete": false
+    },
+    {
+      "id": 3,
+      "task": "meet investors",
+      "complete": false
+    },
+    {
+      "task": "buy groceries",
+      "complete": false,
+      "id": 4
+    },
+    {
+      "task": "go shopping",
+      "complete": "incomplete",
+      "id": 5
+    }
+  ]
+}
